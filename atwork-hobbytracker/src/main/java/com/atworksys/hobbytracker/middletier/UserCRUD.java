@@ -83,9 +83,11 @@ public class UserCRUD {
     		throw new CRUDArgumentException(iae.getMessage());
     	}
     }
-
+    
     private boolean userExists(User user) {
-    	List<User> resultList = em.createNamedQuery(USER_BY_UNAME_QRY, User.class).getResultList();
-		return resultList == null  ||  resultList.size() == 0;
+    	List<User> resultList = em.createNamedQuery(USER_BY_UNAME_QRY, User.class)
+    			.setParameter("u",  user.getUsername())
+    			.getResultList();
+		return resultList != null  &&  resultList.size() > 0;
     }
 }
