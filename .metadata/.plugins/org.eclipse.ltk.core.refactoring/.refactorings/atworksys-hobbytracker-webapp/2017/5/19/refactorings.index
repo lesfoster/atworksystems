@@ -1,0 +1,4 @@
+1494691015966	Rename package 'model'
+1494696206269	Rename type 'CRUDException'
+1494697104733	Extract constant 'USERPHONE_FIND_ALL'
+1494697280827	Extract constant 'USER_FIND_ALL_QRY'

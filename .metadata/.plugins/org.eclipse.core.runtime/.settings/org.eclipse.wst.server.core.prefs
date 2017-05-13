@@ -1,0 +1,2 @@
+eclipse.preferences.version=1
+runtimes=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<runtimes>\r\n  <runtime PROPERTY_EXEC_ENVIRONMENT\="JavaSE-1.8" id\="WildFly 10.1 Runtime" location\="C\:/tools/wildfly-10.1.0.Final" name\="WildFly 10.1 Runtime" org.jboss.ide.eclipse.as.core.runtime.configurationName\="" runtime-type-id\="org.jboss.ide.eclipse.as.runtime.wildfly.100" timestamp\="0"/>\r\n</runtimes>\r\n
