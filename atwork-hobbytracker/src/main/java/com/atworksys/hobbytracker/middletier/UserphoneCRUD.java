@@ -1,5 +1,69 @@
 package com.atworksys.hobbytracker.middletier;
 
-public class UserphoneCRUD {
+import java.util.List;
 
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import com.atworksys.hobbytracker.model.Userphone;
+
+import static com.atworksys.hobbytracker.common.CommonUtil.*;
+
+/**
+ * Create/Read/Update/Delete ops for user's phone.
+ * 
+ * @author Leslie L Foster
+ */
+@Stateless
+public class UserphoneCRUD {
+	private EntityManager em;
+	
+    @PersistenceContext(unitName="primary")
+    public void setEntityManager(EntityManager em) {
+        this.em = em;
+    }	
+
+    /**
+     * Return all of the user/phone table members.
+     * @return exhaustive list.
+     */
+    public List<Userphone> getUserPhones() {
+    	return em.createNamedQuery(USERPHONE_ALL_QRY, Userphone.class).getResultList();
+    }
+    
+    /**
+     * User adds a new phone.  No attempt made to make phones unique by user/type!
+     * 
+     * @param userPhone what to add.
+     * @return the newly-added phone.
+     * @throws CRUDArgumentException
+     */
+    public Userphone addUserPhone(Userphone userPhone) throws CRUDArgumentException {
+    	CRUDArgumentException.throwIfNull(userPhone);
+    	
+    	Userphone up = em.merge(userPhone);
+    	em.flush();
+    	return up;
+    }
+    
+    /**
+     * Will attempt to delete the user/phone combination.
+     * 
+     * @param userphone unwanted handset
+     * @throws CRUDArgumentException if detached/nonexistent.
+     */
+    public void deleteUserPhone(Userphone userphone) throws CRUDArgumentException {
+    	try {
+    		Userphone toDel = em.merge(userphone);
+    		em.remove(toDel);
+    	} catch (IllegalArgumentException iae) {
+    		throw new CRUDArgumentException(iae.getMessage());
+    	}    	
+    	
+    }
+    
+    public void updateUserPhone(Userphone userphone) throws CRUDArgumentException {
+    	
+    }
 }

@@ -4,13 +4,14 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 
+import static com.atworksys.hobbytracker.common.CommonUtil.*;
 
 /**
  * The persistent class for the userphone database table.
  * 
  */
 @Entity
-@NamedQuery(name="Userphone.findAll", query="SELECT u FROM Userphone u")
+@NamedQuery(name=USERPHONE_ALL_QRY, query="SELECT u FROM Userphone u")
 public class Userphone implements Serializable {
 	private static final long serialVersionUID = 1L;
 

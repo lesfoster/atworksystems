@@ -3,13 +3,14 @@ package com.atworksys.hobbytracker.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import static com.atworksys.hobbytracker.common.CommonUtil.*;
 
 /**
  * The persistent class for the userrole database table.
  * 
  */
 @Entity
-@NamedQuery(name="Userrole.findAll", query="SELECT u FROM Userrole u")
+@NamedQuery(name=USERROLE_ALL_QRY, query="SELECT u FROM Userrole u")
 public class Userrole implements Serializable {
 	private static final long serialVersionUID = 1L;
 

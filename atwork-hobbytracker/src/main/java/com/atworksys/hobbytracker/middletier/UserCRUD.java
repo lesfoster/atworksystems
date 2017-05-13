@@ -77,7 +77,8 @@ public class UserCRUD {
     	// Only care if there is no id.
     	CRUDArgumentException.throwIfNull(user);
     	try {
-    		em.remove(user);
+    		User toDel = em.merge(user);
+    		em.remove(toDel);
     		em.flush();
     	} catch (IllegalArgumentException iae) {
     		throw new CRUDArgumentException(iae.getMessage());

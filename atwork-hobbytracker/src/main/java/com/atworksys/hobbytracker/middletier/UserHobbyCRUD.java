@@ -58,7 +58,8 @@ public class UserHobbyCRUD {
     public void deleteUserhobby(Userhobby userHobby) throws CRUDArgumentException {
     	CRUDArgumentException.throwIfNull(userHobby);
     	try {
-    		em.remove(userHobby);
+    		Userhobby toDel = em.merge(userHobby);
+    		em.remove(toDel);
     		em.flush();
     	} catch (IllegalArgumentException iae) {
     		throw new CRUDArgumentException(iae.getMessage());
