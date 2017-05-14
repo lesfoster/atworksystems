@@ -10,7 +10,12 @@ import static com.atworksys.hobbytracker.common.CommonUtil.*;
  * 
  */
 @Entity
-@NamedQuery(name=USERROLE_ALL_QRY, query="SELECT u FROM Userrole u")
+@NamedQueries(value = {
+		@NamedQuery(name=USERROLE_ALL_QRY, query="SELECT u FROM Userrole u"),
+		@NamedQuery(name=USERROLE_NAME_QRY, query="SELECT u FROM Userrole u WHERE u.rolename=:n AND u.user=:u")
+	}
+)
+
 public class Userrole implements Serializable {
 	private static final long serialVersionUID = 1L;
 

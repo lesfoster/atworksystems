@@ -19,5 +19,6 @@ public class CommonUtil {
 	public static final String USERPHONE_BY_ID_QRY = "Userphone.findById";
 	
 	public static final String USERROLE_ALL_QRY = "Userrole.findAll";
+	public static final String USERROLE_NAME_QRY = "Userrole.findByUserIdAndName";
 	
 }

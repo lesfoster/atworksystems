@@ -39,9 +39,9 @@ public class UserHobbyCRUD {
 	 */
     public Userhobby addUserHobby(Userhobby userHobby) throws CRUDArgumentException {
     	CRUDArgumentException.throwIfNull(userHobby);
-    	if (userHobbyExists(userHobby.getUser(), userHobby.getHobby())) {
-    		throw new CRUDArgumentException("User Hobby already exists.");
-    	}
+    	//if (userHobbyExists(userHobby.getUser(), userHobby.getHobby())) {
+    	//	throw new CRUDArgumentException("User Hobby already exists.");
+    	//}
     	    	
     	Userhobby rtnVal = em.merge(userHobby);
     	em.flush();
@@ -74,23 +74,27 @@ public class UserHobbyCRUD {
      */
     public void updateUserHobby(Userhobby userHobby) throws CRUDArgumentException {
     	CRUDArgumentException.throwIfNull(userHobby);
-    	if (! userHobbyExists(userHobby)) {
+    	if (! em.contains(userHobby)) {
     		throw new CRUDArgumentException("User Hobby does not exist.");
     	}
+    	
+    	em.persist(userHobby);
+    	em.flush();
     }
     
-    private boolean userHobbyExists(Userhobby userHobby) {
-    	List<Userhobby> resultList = em.createNamedQuery(USERHOBBY_BY_ID_QRY, Userhobby.class)
-    			.setParameter("u",  userHobby.getId())
-    			.getResultList();
-		return resultList != null  &&  resultList.size() > 0;
-    }
+    //private boolean userHobbyExists(Userhobby userHobby) {
+    //	List<Userhobby> resultList = em.createNamedQuery(USERHOBBY_BY_ID_QRY, Userhobby.class)
+    //			.setParameter("u",  userHobby.getId())
+    //			.getResultList();
+	//	return resultList != null  &&  resultList.size() > 0;
+    //}
 
-    private boolean userHobbyExists(User user, String hobbyDescription) {
-    	List<Userhobby> resultList = em.createNamedQuery(USERHOBBY_BY_UID_NAME_QRY, Userhobby.class)
-    			.setParameter("u", user)
-    			.setParameter("h", hobbyDescription)
-    			.getResultList();
-		return resultList != null  &&  resultList.size() > 0;
-    }
+    //   Can call if 'no dups' required.
+    //private boolean userHobbyExists(User user, String hobbyDescription) {
+    //	List<Userhobby> resultList = em.createNamedQuery(USERHOBBY_BY_UID_NAME_QRY, Userhobby.class)
+    //			.setParameter("u", user)
+    //			.setParameter("h", hobbyDescription)
+    //			.getResultList();
+	//	return resultList != null  &&  resultList.size() > 0;
+    //}
 }

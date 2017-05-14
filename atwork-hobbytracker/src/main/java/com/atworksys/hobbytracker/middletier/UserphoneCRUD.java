@@ -29,7 +29,7 @@ public class UserphoneCRUD {
      * @return exhaustive list.
      */
     public List<Userphone> getUserPhones() {
-    	return em.createNamedQuery(USERPHONE_ALL_QRY, Userphone.class).getResultList();
+    	return em.createNamedQuery(USERPHONE_ALL_QRY, Userphone.class).getResultList();    	
     }
     
     /**
@@ -57,13 +57,24 @@ public class UserphoneCRUD {
     	try {
     		Userphone toDel = em.merge(userphone);
     		em.remove(toDel);
+    		em.flush();
     	} catch (IllegalArgumentException iae) {
     		throw new CRUDArgumentException(iae.getMessage());
     	}    	
     	
     }
     
+    /**
+     * Modify parts of the user-phone.
+     * @param userphone with new values, old id.
+     * @throws CRUDArgumentException if bad args.
+     */
     public void updateUserPhone(Userphone userphone) throws CRUDArgumentException {
+    	if (null == em.find(Userphone.class, userphone.getId())) {
+    		throw new CRUDArgumentException("Not Found");
+    	}
     	
+    	em.persist(userphone);
+    	em.flush();
     }
 }
