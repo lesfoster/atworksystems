@@ -75,9 +75,6 @@ public class UserphoneCRUD {
     		throw new CRUDArgumentException("Not Found");
     	}
     	
-    	//existingPhone.setPhoneNumber(userphone.getPhoneNumber());
-    	//existingPhone.setCreatedBy(userphone.getCreatedBy());
-    	//existingPhone.setCreatedOn(userphone.getCreatedOn());
     	em.merge(userphone);
     	em.flush();
     }
