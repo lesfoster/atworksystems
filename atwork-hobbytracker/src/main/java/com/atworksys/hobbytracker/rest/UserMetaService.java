@@ -154,6 +154,7 @@ public class UserMetaService {
     		return Collections.emptyList();
     	}
     }
+    */
     
     @GET
     @Path("getUsers")
@@ -161,7 +162,12 @@ public class UserMetaService {
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> getUsers() {
     	try {
-    		return userCrud.getUsers();
+    		List<User> users = userCrud.getUsers();
+    		logger.info("User List:");
+    		for (User user: users) {
+    			logger.info("User=" + user.getUsername() + "/Email=" + user.getEmail());
+    		}
+    		return users;
     	} catch (Exception ex) {
     		ex.printStackTrace();
     		return Collections.emptyList();
@@ -173,7 +179,7 @@ public class UserMetaService {
      * @return Response created.
      */
     @GET
-    @Path("getUsers2")
+    @Path("get_users2")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsers2() {
