@@ -25,15 +25,22 @@
          data source, this example data source is just for development and testing! -->
       <!-- The datasource is deployed as WEB-INF/atwork-hobbytracker-ds.xml, you
          can find it in the source at src/main/webapp/WEB-INF/atwork-hobbytracker-ds.xml -->
-      <jta-data-source>java:jboss/datasources/atwork-hobbytrackerDS</jta-data-source>
+      <jta-data-source>java:/primary</jta-data-source>
       <class>com.atworksys.hobbytracker.model.User</class>
       <class>com.atworksys.hobbytracker.model.Userhobby</class>
       <class>com.atworksys.hobbytracker.model.Userphone</class>
       <class>com.atworksys.hobbytracker.model.Userrole</class>
       <properties>
-         <!-- Properties for Hibernate -->
+          <!-- Scan for annotated classes -->
+          <property name="hibernate.archive.autodetection" value="class"/>
+          <property name="hibernate.show_sql" value="false" />
+      </properties>
+      <!-- Properties for Hibernate       
+      <properties>
+
          <property name="hibernate.hbm2ddl.auto" value="create-drop" />
          <property name="hibernate.show_sql" value="false" />
       </properties>
+      -->
    </persistence-unit>
 </persistence>

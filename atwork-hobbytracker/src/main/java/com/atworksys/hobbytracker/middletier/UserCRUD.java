@@ -29,6 +29,16 @@ public class UserCRUD {
      * @return
      */
     public List<User> getUsers() {
+    	// TEMP
+    	/*
+    	List<User> tempReturn = new java.util.ArrayList<>();
+    	User aUser = new User();
+    	aUser.setEmail("me@example.com");
+    	aUser.setUsername("me");
+    	aUser.setUserId("777");
+    	tempReturn.add(aUser);
+    	return tempReturn;
+    	*/
     	return em.createNamedQuery(USER_ALL_QRY, User.class).getResultList();
     }
     

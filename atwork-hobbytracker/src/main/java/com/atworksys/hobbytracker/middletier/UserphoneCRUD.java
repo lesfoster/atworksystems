@@ -42,9 +42,9 @@ public class UserphoneCRUD {
     public Userphone addUserPhone(Userphone userPhone) throws CRUDArgumentException {
     	CRUDArgumentException.throwIfNull(userPhone);
     	
-    	Userphone up = em.merge(userPhone);
+    	em.persist(userPhone);
     	em.flush();
-    	return up;
+    	return userPhone;
     }
     
     /**
@@ -70,11 +70,15 @@ public class UserphoneCRUD {
      * @throws CRUDArgumentException if bad args.
      */
     public void updateUserPhone(Userphone userphone) throws CRUDArgumentException {
-    	if (null == em.find(Userphone.class, userphone.getId())) {
+    	Userphone existingPhone = null;
+    	if (null == (existingPhone = em.find(Userphone.class, userphone.getId())) ) {
     		throw new CRUDArgumentException("Not Found");
     	}
     	
-    	em.persist(userphone);
+    	//existingPhone.setPhoneNumber(userphone.getPhoneNumber());
+    	//existingPhone.setCreatedBy(userphone.getCreatedBy());
+    	//existingPhone.setCreatedOn(userphone.getCreatedOn());
+    	em.merge(userphone);
     	em.flush();
     }
 }

@@ -71,7 +71,7 @@ public class UserMetaService {
 
 	/**
 	 * Flesh out the exposed interface.
-	 *
+	 */
     @POST
 	@Path("addUser")    
     @Produces(MediaType.TEXT_PLAIN)
@@ -89,7 +89,7 @@ public class UserMetaService {
     @Path("deletePhone/{user_id}/{type}")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
-    public void deletePhone(@PathParam("user_id") Long userId, @PathParam("type") String type) {
+    public void deletePhone(@PathParam("user_id") String userId, @PathParam("type") String type) {
     	try {
     		if (userId != null  &&  type != null) {
         		List<Userphone> userPhones = userPhoneCrud.getUserPhones();
@@ -108,26 +108,34 @@ public class UserMetaService {
     @Path("updatePhone/{user_id}/{type}/{phone_number}")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
-    public void updatePhone(@PathParam("user_id") Long userId, @PathParam("type") String type, @PathParam("phone_number") String phone) {
+    public void updatePhone(@PathParam("user_id") String userId, @PathParam("type") String type, @PathParam("phone_number") String phone) {
     	try {
     		// We can set the phone number to empty/null, but need to find it.
     		if (userId != null  &&  type != null) {
     			for (Userphone userPhone: userPhoneCrud.getUserPhones()) { // TODO: add method to pull by user id.
-    				// Avoid NPEs
-    				if (phone == null   &&  (userPhone.getPhoneNumber() != null)) {
-    					continue;
-    				}
-    				else if (phone != null  &&  userPhone.getPhoneNumber() == null) {
-    					continue;
-    				}
-    				
-    				// Takes both-numbers-are-null or both are equal into account
-    				if (type.equals(userPhone.getType())  &&
-    				    (phone == userPhone.getPhoneNumber() ||
-    				     phone.equals(userPhone.getPhoneNumber()) ) ) {
-    					userPhoneCrud.deleteUserPhone(userPhone);
+    				if (userPhone.getUser().getUserId().equals(userId)) {
+        				// Avoid NPEs
+        				if (phone == null   &&  (userPhone.getPhoneNumber() != null)) {
+        					logger.warn("Found null/not-null mismatch.");
+        					continue;
+        				}
+        				else if (phone != null  &&  userPhone.getPhoneNumber() == null) {
+        					logger.warn("Found not-null/null mismatch.");
+        					continue;
+        				}
+        				
+        				logger.debug("Checking number of " + userPhone.getPhoneNumber() + " vs " + phone);
+        				
+        				if (type.equals(userPhone.getType())) {
+        					userPhone.setPhoneNumber(phone);
+        					logger.info("changing the phone.");
+        					userPhoneCrud.updateUserPhone(userPhone);
+        				}
     				}
     			}
+    		}
+    		else {
+    			logger.debug("Skipping null userid or type.");
     		}
     	} catch (Exception ex) {
     		ex.printStackTrace();
@@ -138,7 +146,7 @@ public class UserMetaService {
     @Path("getHobbies/{user_id}")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Userhobby> getHobbies(@PathParam("user_id") Long userId) {
+    public List<Userhobby> getHobbies(@PathParam("user_id") String userId) {
     	try {
     		List<Userhobby> rtnVal = new ArrayList<>();
     		if (userId != null) {
@@ -154,7 +162,6 @@ public class UserMetaService {
     		return Collections.emptyList();
     	}
     }
-    */
     
     @GET
     @Path("getUsers")
