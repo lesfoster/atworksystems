@@ -9,11 +9,14 @@ import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
+
+import org.jboss.logging.Logger;
 
 import com.atworksys.hobbytracker.middletier.UserCRUD;
 import com.atworksys.hobbytracker.middletier.UserHobbyCRUD;
@@ -34,6 +37,8 @@ import com.atworksys.hobbytracker.model.Userphone;
 @RequestScoped
 @Path("/usermeta")
 public class UserMetaService {
+	private Logger logger = Logger.getLogger(UserMetaService.class);
+	
 	private UserCRUD userCrud;
 	private UserHobbyCRUD userHobbyCrud;
 	private UserphoneCRUD userPhoneCrud;
@@ -66,7 +71,7 @@ public class UserMetaService {
 
 	/**
 	 * Flesh out the exposed interface.
-	 */
+	 *
     @POST
 	@Path("addUser")    
     @Produces(MediaType.TEXT_PLAIN)
@@ -162,4 +167,26 @@ public class UserMetaService {
     		return Collections.emptyList();
     	}
     }
+    
+    /**
+     * Making this alternate, to see if the return type is interfering with my finding this at test-time.
+     * @return Response created.
+     */
+    @GET
+    @Path("getUsers2")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUsers2() {
+    	try {
+    		logger.info("Entering getUsers method.");
+    		List<User> users = userCrud.getUsers();    		
+            GenericEntity<List<User>> list = new GenericEntity<List<User>>(new ArrayList<>(users)) {};
+            return Response.ok(list).build();
+    	} catch (Exception ex) {
+    		ex.printStackTrace();
+    		return Response.serverError().build();
+    	}
+    }
+    
 }
+
