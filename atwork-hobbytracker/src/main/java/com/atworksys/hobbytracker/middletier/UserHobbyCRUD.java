@@ -4,6 +4,7 @@ import static com.atworksys.hobbytracker.common.CommonUtil.USERHOBBY_ALL_QRY;
 import static com.atworksys.hobbytracker.common.CommonUtil.USERHOBBY_BY_ID_QRY;
 import static com.atworksys.hobbytracker.common.CommonUtil.USERHOBBY_BY_UID_NAME_QRY;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -28,7 +29,17 @@ public class UserHobbyCRUD {
 	 * @return exhaustive list.
 	 */
 	public List<Userhobby> getUserHobbies() {
-    	return em.createNamedQuery(USERHOBBY_ALL_QRY, Userhobby.class).getResultList();
+    	List<Userhobby> hobbies = em.createNamedQuery(USERHOBBY_ALL_QRY, Userhobby.class).getResultList();
+    	// Sanitize hobbies, so that no extra information-fetch is attempted.
+    	for (Userhobby hobby: hobbies) {
+    		User user = hobby.getUser();
+    		em.detach(user);
+    		user.setUserphones(Collections.emptyList());
+    		user.setUserroles(Collections.emptyList());
+    		user.setUserhobbies(Collections.emptyList());
+    		em.detach(hobby);    		
+    	}
+    	return hobbies;
 	}
 	
 	/**

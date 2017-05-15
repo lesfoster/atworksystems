@@ -148,10 +148,11 @@ public class UserMetaService {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Userhobby> getHobbies(@PathParam("user_id") String userId) {
     	try {
+    		Long userIdLong = Long.parseLong(userId);
     		List<Userhobby> rtnVal = new ArrayList<>();
     		if (userId != null) {
         		for (Userhobby hobby: userHobbyCrud.getUserHobbies()) {   // TODO: add method to pull by user id.
-        			if (hobby.getUser().getUserId().equals(userId)) {
+        			if (hobby.getUser().getUserId().equals(userIdLong)) {
         				rtnVal.add(hobby);
         			}
         		}
