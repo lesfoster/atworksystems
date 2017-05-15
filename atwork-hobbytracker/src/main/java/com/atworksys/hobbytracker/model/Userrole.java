@@ -20,6 +20,7 @@ public class Userrole implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue
 	@Column(name="role_id")
 	private String roleId;
 

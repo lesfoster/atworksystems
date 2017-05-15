@@ -1,0 +1,27 @@
+== Info:   Trying ::1...
+== Info:   Trying 127.0.0.1...
+== Info: Connected to localhost (127.0.0.1) port 8080 (#0)
+=> Send header, 167 bytes (0xa7)
+0000: POST /atwork-hobbytracker/usermeta/addUser HTTP/1.1
+0035: Host: localhost:8080
+004b: User-Agent: curl/7.45.0
+0064: Accept: */*
+0071: Content-Type:application/json
+0090: Content-Length: 153
+00a5: 
+=> Send data, 153 bytes (0x99)
+0000: {    "email": "joeschmo@example.com",    "password": "philately"
+0040: ,    "username": "jschmo",    "userhobbies": [],    "userphones"
+0080: : [],    "userroles": []}
+== Info: upload completely sent off: 153 out of 153 bytes
+<= Recv header, 25 bytes (0x19)
+0000: HTTP/1.1 204 No Content
+<= Recv header, 26 bytes (0x1a)
+0000: X-Powered-By: Undertow/1
+<= Recv header, 20 bytes (0x14)
+0000: Server: WildFly/10
+<= Recv header, 37 bytes (0x25)
+0000: Date: Mon, 15 May 2017 00:32:52 GMT
+<= Recv header, 2 bytes (0x2)
+0000: 
+== Info: Connection #0 to host localhost left intact

@@ -1,0 +1,2 @@
+REM Run curl program to test POST workload to AtWorkSys service.
+curl -v --trace-ascii trace_file.txt -H Content-Type:application/json --data @add_user.json --request POST http://localhost:8080/atwork-hobbytracker/usermeta/addUser
