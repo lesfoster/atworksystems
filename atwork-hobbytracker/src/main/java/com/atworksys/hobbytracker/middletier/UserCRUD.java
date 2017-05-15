@@ -1,5 +1,6 @@
 package com.atworksys.hobbytracker.middletier;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -39,7 +40,14 @@ public class UserCRUD {
     	tempReturn.add(aUser);
     	return tempReturn;
     	*/
-    	return em.createNamedQuery(USER_ALL_QRY, User.class).getResultList();
+    	List<User> rtnVal =  em.createNamedQuery(USER_ALL_QRY, User.class).getResultList();
+    	for (User user: rtnVal) {
+    		em.detach(user);
+    		user.setUserhobbies(Collections.emptyList());
+    		user.setUserphones(Collections.emptyList());
+    		user.setUserroles(Collections.emptyList());
+    	}
+    	return rtnVal;
     }
     
     /**

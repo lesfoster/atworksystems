@@ -171,9 +171,9 @@ public class UserMetaService {
     	try {
     		List<User> users = userCrud.getUsers();
     		logger.info("User List:");
-    		for (User user: users) {
-    			logger.info("User=" + user.getUsername() + "/Email=" + user.getEmail());
-    		}
+    		for (User user: users) {    			
+    			logger.info("User=" + user.getUsername() + "/Email=" + user.getEmail());    			
+    		}    		
     		return users;
     	} catch (Exception ex) {
     		ex.printStackTrace();
